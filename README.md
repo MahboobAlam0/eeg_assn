@@ -40,8 +40,7 @@ This Streamlit web application allows for EEG alpha spindle analysis and visuali
 ├── app.py              # Streamlit UI for the app
 ├── eeg_utils.py        # Core EEG processing functions (reusable)
 ├── README.md
-└── data/
-    └── Original_Data.xlsx  # EEG data file with ECBL and EOBL sheets
+├── eeg_signal.ipynb
 ```
 
 ---
