@@ -1,6 +1,6 @@
- __pycache__/
+__pycache__/
 *.pyc
+*.pyo
+*.ipynb_checkpoints
 .env
-*.xlsx
-*.csv
-*.jso
+.venv/
