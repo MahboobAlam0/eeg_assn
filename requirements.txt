@@ -1,1 +1,7 @@
--e "streamlit\npandas\nnumpy\nmatplotlib\nmne\nPyWavelets\nopenpyxl" 
+streamlit==1.32.2
+pandas==2.1.4
+numpy==1.24.4
+matplotlib==3.7.4
+mne==1.5.1
+PyWavelets==1.4.1
+openpyxl==3.1.2
