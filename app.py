@@ -1,23 +1,43 @@
 # app.py (Streamlit App)
 import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from eeg_utils import *
 
+st.set_page_config(page_title="EEG Alpha Spindle Analyzer", layout="wide")
 st.title("EEG Alpha Spindle Analyzer")
 
-uploaded_file = st.file_uploader("Upload EEG Excel file", type="xlsx")
+st.warning("This app accepts only .csv and .xlsx files.")
 
-if uploaded_file:
-    sheet = st.selectbox("Choose Sheet", ["ECBL", "EOBL"])
-    df = load_eeg_excel(uploaded_file, sheet)
-    sfreq = 512
-    raw = preprocess_to_raw(df, sfreq)
+uploaded_file = st.file_uploader("Upload EEG Data (.csv or .xlsx)", type=["csv", "xlsx"])
 
-    st.subheader("EEG Signal Overview")
-    st.write(df.head())
+sheet = None
+raw = None
+
+if uploaded_file is not None:
+    if uploaded_file.name.endswith('.csv'):
+        df = pd.read_csv(uploaded_file)
+        sheet = "CSV"
+        st.success("CSV file loaded successfully!")
+    elif uploaded_file.name.endswith('.xlsx'):
+        excel_data = pd.read_excel(uploaded_file, sheet_name=None, engine='openpyxl')
+        sheet = st.selectbox("Choose Sheet", list(excel_data.keys()))
+        df = excel_data[sheet]
+        st.success(f"Excel file loaded. Selected sheet: {sheet}")
+
+    st.subheader("Preview of Uploaded Data")
+    st.dataframe(df.head())
     st.write(f"Shape: {df.shape}")
 
+    try:
+        sfreq = 512  # Hz
+        raw = preprocess_to_raw(df, sfreq)
+        st.success("EEG data converted to MNE Raw object successfully.")
+    except Exception as e:
+        st.error(f"Error in preprocessing EEG data: {e}")
+
+if raw is not None:
     task = st.radio("Choose Task", [
         "1. Total Alpha Spindle Count",
         "2. Electrode-wise Spindle Count",
