@@ -61,7 +61,7 @@ streamlit run app.py
 ## 📌 Notes
 - Sampling frequency is fixed at **512 Hz**.
 - Spindle detection uses a threshold based on **Hilbert envelope** (threshold = `2.5 × std`).
-- You can upload your own `.xlsx` file with EEG data sheets (`ECBL`, `EOBL`).
+- You can upload your own `.xlsx` & `.csv` file with EEG data sheets (`ECBL`, `EOBL`).
 - Time column is optional — calculated from sample index if missing.
 
 ---
